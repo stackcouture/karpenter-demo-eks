@@ -9,8 +9,8 @@ on:
 env: 
   AWS_REGION: ap-south-1
   # AWS_PROFILE: demo-user1
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 permissions:
   contents: read
@@ -40,22 +40,32 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-terraform-
 
+      - name: Configure AWS Credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::104824081961:role/GitHubActionsOIDCRole-104824081961
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Verify AWS Credentials
+        run: |
+          aws sts get-caller-identity
+
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Format Check
-        run: terraform fmt 
+        run: terraform fmt --recursive
 
       - name: Terraform Validate
         run: terraform validate
 
       - name: Terraform plan
         run: |
-          terraform plan -var-file=dev.tfvars -out=dev-tfplan
+          terraform plan -var-file=dev.tfvars -out=tfplan
     
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve dev-tfplan
+          terraform apply -auto-approve tfplan
 
     #   - name: Terraform Destroy
     #     run: |

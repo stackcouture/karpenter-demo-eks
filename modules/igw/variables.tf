@@ -7,3 +7,8 @@ variable "igw_name" {
   type        = string
   description = "Internet Gateway Name"
 }
+
+variable "env" {
+  type        = string
+  description = "Environment Name"
+}

@@ -14,8 +14,7 @@ terraform {
     # encrypt = true
     # dynamodb_table = "tf-aws-infra-terraform-locking"
     use_lockfile = true
-
-   # profile = "demo-user1"
+    # profile = "demo-user1"
   }
 }
 
