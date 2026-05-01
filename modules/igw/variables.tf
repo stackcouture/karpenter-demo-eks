@@ -12,3 +12,8 @@ variable "env" {
   type        = string
   description = "Environment Name"
 }
+
+variable "cluster-name" {
+  type        = string
+  description = "Cluster Name"
+}

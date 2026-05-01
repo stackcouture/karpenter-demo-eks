@@ -42,3 +42,8 @@ variable "repo_full_name" {
   description = "Repo name"
   default     = "stackcouture/karpenter-demo-eks"
 }
+
+variable "cluster-name" {
+  type        = string
+  description = "Cluster Name"
+}

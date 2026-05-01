@@ -9,3 +9,4 @@ enable_dns_hostnames = true
 
 #IGW 
 igw_name = "VPC-IGW"
+cluster-name               = "eks-cluster"
