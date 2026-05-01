@@ -15,11 +15,11 @@ terraform {
     # dynamodb_table = "tf-aws-infra-terraform-locking"
     use_lockfile = true
 
-    profile = "demo-user1"
+   # profile = "demo-user1"
   }
 }
 
 provider "aws" {
   region  = "ap-south-1"
-  profile = "demo-user1"
+  # profile = "demo-user1"
 }
