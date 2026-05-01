@@ -19,11 +19,6 @@ jobs:
     name: Terraform Plan
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        shell: bash
-        working-directory: eks
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
