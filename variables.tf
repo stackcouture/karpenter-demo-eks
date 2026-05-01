@@ -37,12 +37,6 @@ variable "igw_name" {
   description = "Internet Gateway Name"
 }
 
-variable "repo_full_name" {
-  type        = string
-  description = "Repo name"
-  default     = "stackcouture/karpenter-demo-eks"
-}
-
 variable "cluster-name" {
   type        = string
   description = "Cluster Name"
