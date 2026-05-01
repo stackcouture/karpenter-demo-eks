@@ -25,4 +25,10 @@ module "subnets" {
   pub-subnet-count      = var.pub-subnet-count
   pub-cidr-block        = var.pub-cidr-block
   pub-availability-zone = var.pub-availability-zone
+
+  pri-sub-name          = var.pri-sub-name
+  pri-subnet-count      = var.pri-subnet-count
+  pri-cidr-block        = var.pri-cidr-block
+  pri-availability-zone = var.pri-availability-zone
+
 }
