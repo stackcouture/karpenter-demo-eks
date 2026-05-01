@@ -8,5 +8,12 @@ enable_dns_hostnames = true
 
 
 #IGW 
-igw_name = "VPC-IGW"
-cluster-name               = "eks-cluster"
+igw_name     = "VPC-IGW"
+cluster-name = "eks-cluster"
+
+# Subnets 
+
+pub-subnet-count      = 3
+pub-cidr-block        = ["10.16.0.0/20", "10.16.16.0/20", "10.16.32.0/20"]
+pub-availability-zone = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+pub-sub-name          = "subnet-public"
