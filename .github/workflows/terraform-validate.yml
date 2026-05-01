@@ -48,9 +48,15 @@ jobs:
 
       - name: Terraform Validate
         run: terraform validate
-        continue-on-error: false
 
       - name: Terraform plan
         run: |
-          terraform plan -var-file=dev.tfvars -input=false
-        continue-on-error: false
+          terraform plan -var-file=dev.tfvars -out=dev-tfplan
+    
+      - name: Terraform Apply
+        run: |
+          terraform apply -auto-approve -out=dev-tfplan
+
+        
+
+            
