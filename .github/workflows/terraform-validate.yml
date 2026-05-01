@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v4
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -59,7 +59,7 @@ jobs:
 
       - name: Terraform Destroy
         run: |
-          terraform plan -destroy -out=dev-tfplan
+          terraform plan -destroy -out=dev-tfplan -input=false
           terraform apply dev-tfplan
 
         
