@@ -29,3 +29,10 @@ variable "enable_dns_hostnames" {
   type        = bool
   description = "Enable DNS Hostnam"
 }
+
+
+# IGW 
+variable "igw_name" {
+  type        = string
+  description = "Internet Gateway Name"
+}
