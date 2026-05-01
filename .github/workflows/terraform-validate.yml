@@ -55,7 +55,7 @@ jobs:
     
       - name: Terraform Apply
         run: |
-          terraform apply -auto-approve -out=dev-tfplan
+          terraform apply -auto-approve dev-tfplan
 
         
 
