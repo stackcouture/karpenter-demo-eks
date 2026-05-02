@@ -36,3 +36,8 @@ is_eks_role_enabled           = true
 is_eks_nodegroup_role_enabled = true
 aws_region                    = "ap-south-1"
 
+is-eks-cluster-enabled  = true
+kubernetes_version      = "1.34"
+endpoint-private-access = true
+endpoint-public-access  = false
+
