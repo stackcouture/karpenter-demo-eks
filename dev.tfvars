@@ -41,3 +41,28 @@ kubernetes_version      = "1.34"
 endpoint-private-access = true
 endpoint-public-access  = false
 
+
+instance_types   = ["t3.medium"]
+desired_capacity = 1
+min_capacity     = 1
+max_capacity     = 2
+
+addons = [
+  {
+    name    = "vpc-cni",
+    version = "v1.20.0-eksbuild.1"
+  },
+  {
+    name    = "coredns"
+    version = "v1.12.2-eksbuild.4"
+  },
+  {
+    name    = "kube-proxy"
+    version = "v1.33.0-eksbuild.2"
+  },
+  {
+    name    = "aws-ebs-csi-driver"
+    version = "v1.46.0-eksbuild.1"
+  }
+  # Add more addons as needed
+]

@@ -23,3 +23,81 @@ resource "aws_eks_cluster" "eks" {
     Env  = var.env
   }
 }
+
+# OpenID connect
+data "tls_certificate" "eks-certificate" {
+  url = aws_eks_cluster.eks[0].identity[0].oidc[0].issuer
+}
+
+resource "aws_iam_openid_connect_provider" "eks-oidc" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [data.tls_certificate.eks-certificate.certificates[0].sha1_fingerprint]
+  url             = data.tls_certificate.eks-certificate.url
+}
+
+data "aws_iam_policy_document" "eks_oidc_assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_iam_openid_connect_provider.eks-oidc.url, "https://", "")}:sub"
+      values   = ["system:serviceaccount:default:aws-test"]
+    }
+
+    principals {
+      identifiers = [aws_iam_openid_connect_provider.eks-oidc.arn]
+      type        = "Federated"
+    }
+  }
+}
+
+# Add Ons 
+resource "aws_eks_addon" "eks-addons" {
+  for_each      = { for idx, addon in var.addons : idx => addon }
+  cluster_name  = aws_eks_cluster.eks[0].name
+  addon_name    = each.value.name
+  addon_version = each.value.version
+
+  depends_on = [aws_eks_node_group.ondemand-node]
+}
+
+
+resource "aws_eks_node_group" "ondemand-node" {
+  cluster_name    = aws_eks_cluster.eks[0].name
+  node_group_name = "${var.cluster-name}-ondemand-node-group"
+  node_role_arn   = var.node_eks_role_arn # aws_iam_role.eks_nodegroup_role[0].arn
+
+  for_each = { for idx, subnet_id in var.private_subnet_ids : idx => subnet_id }
+  #subnet_id      = each.value
+  subnet_ids = [each.value]
+
+  scaling_config {
+    desired_size = var.desired_capacity
+    min_size     = var.min_capacity
+    max_size     = var.max_capacity
+  }
+
+  instance_types = var.instance_types
+  capacity_type  = "ON_DEMAND"
+
+  labels = {
+    type = "on-demand"
+  }
+
+  update_config {
+    max_unavailable = 1
+  }
+
+
+  tags = {
+    "Name" = "${var.cluster-name}-ondemand-nodes"
+  }
+
+  tags_all = {
+    "kubernetes.io/cluster/${var.cluster-name}" = "owned"
+  }
+
+  depends_on = [aws_eks_cluster.eks]
+}

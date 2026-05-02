@@ -4,3 +4,4 @@
 dev-tfplan
 tfplan 
 tfpan
+.terraform.lock.hcl

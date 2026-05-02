@@ -83,4 +83,12 @@ module "eks" {
   eks-cluster-role-arn      = module.iam.eks-cluster-role-arn
   private_subnet_ids        = module.subnets.private_subnets
   env                       = var.env
+  desired_capacity          = var.desired_capacity
+  min_capacity              = var.min_capacity
+  max_capacity              = var.max_capacity
+  instance_types            = var.instance_types
+  node_eks_role_arn         = module.iam.eks-nodegroup-role-arn
+
+  addons = var.addons
+
 }
