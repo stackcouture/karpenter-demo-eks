@@ -163,3 +163,23 @@ variable "addons" {
     version = string
   }))
 }
+
+variable "desired_capacity_spot" {
+  type        = string
+  description = "Desired Spot Capacity"
+}
+
+variable "min_capacity_spot" {
+  type        = string
+  description = "Minimum Spot Capacity"
+}
+
+variable "max_capacity_spot" {
+  type        = string
+  description = "Maximum Spot Capacity"
+}
+
+variable "spot_instance_types" {
+  type        = list(string)
+  description = "Spot Instance Types"
+}

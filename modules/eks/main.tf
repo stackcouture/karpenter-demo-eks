@@ -14,7 +14,7 @@ resource "aws_eks_cluster" "eks" {
 
 
   access_config {
-    authentication_mode                         = "CONFIG_MAP"
+    authentication_mode                         = "API"
     bootstrap_cluster_creator_admin_permissions = true
   }
 
@@ -69,8 +69,7 @@ resource "aws_eks_node_group" "ondemand-node" {
   node_group_name = "${var.cluster-name}-ondemand-node-group"
   node_role_arn   = var.node_eks_role_arn # aws_iam_role.eks_nodegroup_role[0].arn
 
-  for_each = { for idx, subnet_id in var.private_subnet_ids : idx => subnet_id }
-  #subnet_id      = each.value
+  for_each   = { for idx, subnet_id in var.private_subnet_ids : idx => subnet_id }
   subnet_ids = [each.value]
 
   scaling_config {
@@ -89,7 +88,6 @@ resource "aws_eks_node_group" "ondemand-node" {
   update_config {
     max_unavailable = 1
   }
-
 
   tags = {
     "Name" = "${var.cluster-name}-ondemand-nodes"
