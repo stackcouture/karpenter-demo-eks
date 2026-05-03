@@ -44,27 +44,27 @@ variable "cluster_name" {
 
 # Public Subnets 
 
-variable "pub-subnet-count" {}
-variable "pub-cidr-block" {
+variable "pub_subnet_count" {}
+variable "pub_cidr_block" {
   type = list(string)
 }
-variable "pub-availability-zone" {
+variable "pub_availability_zone" {
   type = list(string)
 }
 
-variable "pub-sub-name" {}
-variable "pri-subnet-count" {}
-variable "pri-cidr-block" {
+variable "pub_sub_name" {}
+variable "private_subnet_count" {}
+variable "private_cidr_block" {
   type = list(string)
 }
-variable "pri-availability-zone" {
+variable "private_availability_zone" {
   type = list(string)
 }
-variable "pri-sub-name" {}
+variable "private_sub_name" {}
 
 # Route tables 
 
-variable "public-rt-name" {
+variable "public_rt_name" {
   type        = string
   description = "Public Route Table Name"
 }
@@ -81,7 +81,7 @@ variable "eip_name" {
 }
 
 
-variable "private-rt-name" {
+variable "private_rt_name" {
   type        = string
   description = "Private Route Table Name"
 }
@@ -117,7 +117,7 @@ variable "aws_region" {
 }
 
 # Cluster Variables 
-variable "is-eks-cluster-enabled" {
+variable "is_eks_cluster_enabled" {
   type        = bool
   description = "EKS Cluster Enabled"
 }
@@ -127,12 +127,12 @@ variable "kubernetes_version" {
   description = "Kubernetes version"
 }
 
-variable "endpoint-private-access" {
+variable "endpoint_private_access" {
   type        = string
   description = "Cluster EndPoint Private Access"
 }
 
-variable "endpoint-public-access" {
+variable "endpoint_public_access" {
   type        = string
   description = "Cluster EndPoint Public Access"
 }
@@ -188,4 +188,9 @@ variable "cluster_service_ipv4_cidr" {
   description = "service ipv4 cidr for the kubernetes cluster"
   type        = string
   default     = null
+}
+
+variable "s3_vpc_enpoint_name" {
+  type        = string
+  description = "S3 VPC Endpoint Name"
 }

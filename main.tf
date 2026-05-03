@@ -21,23 +21,23 @@ module "subnets" {
   vpc_id                = module.vpc.vpc_id
   env                   = var.env
   cluster_name          = var.cluster_name
-  pub-sub-name          = var.pub-sub-name
-  pub-subnet-count      = var.pub-subnet-count
-  pub-cidr-block        = var.pub-cidr-block
-  pub-availability-zone = var.pub-availability-zone
+  pub_sub_name          = var.pub_sub_name
+  pub_subnet_count      = var.pub_subnet_count
+  pub_cidr_block        = var.pub_cidr_block
+  pub_availability_zone = var.pub_availability_zone
 
-  pri-sub-name          = var.pri-sub-name
-  pri-subnet-count      = var.pri-subnet-count
-  pri-cidr-block        = var.pri-cidr-block
-  pri-availability-zone = var.pri-availability-zone
+  private_sub_name          = var.private_sub_name
+  private_subnet_count      = var.private_subnet_count
+  private_cidr_block        = var.private_cidr_block
+  private_availability_zone = var.private_availability_zone
 }
 
-module "route-table" {
+module "route_table" {
   source          = "./modules/rt"
   vpc_id          = module.vpc.vpc_id
   env             = var.env
-  public-rt-name  = var.public-rt-name
-  private-rt-name = var.private-rt-name
+  public_rt_name  = var.public_rt_name
+  private_rt_name = var.private_rt_name
   igw_id          = module.igw.igw_id
   # nat_gateway_id     = module.nat.nat_gateway_id
   public_subnet_ids  = module.subnets.public_subnets
@@ -72,22 +72,31 @@ module "iam" {
   is_eks_role_enabled           = var.is_eks_role_enabled
 }
 
+module "vpc_endpoints" {
+  source                 = "./modules/vpc-endpoints"
+  aws_region             = var.aws_region
+  private_route_table_id = module.route_table.private_rt_id
+  vpc_id                 = module.vpc.vpc_id
+  s3_vpc_enpoint_name    = var.s3_vpc_enpoint_name
+  env                    = var.env
+}
+
 # module "eks" {
 #   source                    = "./modules/eks"
 #   cluster_name              = var.cluster_name
-#   is-eks-cluster-enabled    = var.is-eks-cluster-enabled
+#   is_eks_cluster_enabled    = var.is_eks_cluster_enabled
 #   kubernetes_version        = var.kubernetes_version
-#   endpoint-private-access   = var.endpoint-private-access
-#   endpoint-public-access    = var.endpoint-public-access
+#   endpoint_private_access   = var.endpoint_private_access
+#   endpoint_public_access    = var.endpoint_public_access
 #   aws_eks_security_group_id = module.sg.eks_cluster_sg-id
-#   eks-cluster-role-arn      = module.iam.eks-cluster-role-arn
+#   eks_cluster_role_arn      = module.iam.eks_cluster_role_arn
 #   private_subnet_ids        = module.subnets.private_subnets
 #   env                       = var.env
 #   desired_capacity          = var.desired_capacity
 #   min_capacity              = var.min_capacity
 #   max_capacity              = var.max_capacity
 #   instance_types            = var.instance_types
-#   node_eks_role_arn         = module.iam.eks-nodegroup-role-arn
+#   node_eks_role_arn         = module.iam.eks_nodegroup_role-arn
 #   addons                = var.addons
 #   cluster_service_ipv4_cidr = var.cluster_service_ipv4_cidr
 # }

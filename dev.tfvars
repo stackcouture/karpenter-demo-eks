@@ -13,18 +13,18 @@ cluster_name = "eks-cluster"
 
 # Subnets 
 
-pub-subnet-count      = 3
-pub-cidr-block        = ["10.16.0.0/20", "10.16.16.0/20", "10.16.32.0/20"]
-pub-availability-zone = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
-pub-sub-name          = "subnet-public"
+pub_subnet_count      = 3
+pub_cidr_block        = ["10.16.0.0/20", "10.16.16.0/20", "10.16.32.0/20"]
+pub_availability_zone = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+pub_sub_name          = "subnet-public"
 
-pri-subnet-count      = 3
-pri-cidr-block        = ["10.16.128.0/20", "10.16.144.0/20", "10.16.160.0/20"]
-pri-availability-zone = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
-pri-sub-name          = "subnet-private"
+private_subnet_count      = 3
+private_cidr_block        = ["10.16.128.0/20", "10.16.144.0/20", "10.16.160.0/20"]
+private_availability_zone = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+private_sub_name          = "subnet-private"
 
-public-rt-name  = "public-route-table"
-private-rt-name = "private-route-table"
+public_rt_name  = "public-route-table"
+private_rt_name = "private-route-table"
 
 nat_gw_name = "NAT-GW"
 eip_name    = "VPC-Elastic-IP"
@@ -36,10 +36,10 @@ is_eks_role_enabled           = true
 is_eks_nodegroup_role_enabled = true
 aws_region                    = "ap-south-1"
 
-is-eks-cluster-enabled  = true
+is_eks_cluster_enabled  = true
 kubernetes_version      = "1.34"
-endpoint-private-access = true
-endpoint-public-access  = false
+endpoint_private_access = true
+endpoint_public_access  = false
 
 
 instance_types   = ["t3.medium"]
@@ -74,3 +74,7 @@ addons = [
 ]
 
 cluster_service_ipv4_cidr = "172.20.0.0/16"
+
+# VPC Endpoint 
+s3_vpc_enpoint_name = "EKS-S3-Endpoint"
+ 

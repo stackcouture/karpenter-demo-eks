@@ -8,7 +8,7 @@ variable "aws_eks_security_group_id" {
   description = "Security Group IDs"
 }
 
-variable "is-eks-cluster-enabled" {
+variable "is_eks_cluster_enabled" {
   type        = bool
   description = "EKS Cluster Enabled"
 }
@@ -23,12 +23,12 @@ variable "kubernetes_version" {
   description = "Kubernetes version"
 }
 
-variable "endpoint-private-access" {
+variable "endpoint_private_access" {
   type        = string
   description = "Cluster EndPoint Private Access"
 }
 
-variable "endpoint-public-access" {
+variable "endpoint_public_access" {
   type        = string
   description = "Cluster EndPoint Public Access"
 }
@@ -38,7 +38,7 @@ variable "env" {
   description = "Environment Name"
 }
 
-variable "eks-cluster-role-arn" {
+variable "eks_cluster_role_arn" {
   type        = string
   description = "EKS Cluster Role ARN"
 }

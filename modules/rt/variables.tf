@@ -15,7 +15,7 @@ variable "env" {
   description = "Environment Name"
 }
 
-variable "public-rt-name" {
+variable "public_rt_name" {
   type        = string
   description = "Public Route Table Name"
 }
@@ -35,7 +35,7 @@ variable "private_subnet_ids" {
   description = "List of Private Subnet IDs"
 }
 
-variable "private-rt-name" {
+variable "private_rt_name" {
   type        = string
   description = "Private Route Table Name"
 }

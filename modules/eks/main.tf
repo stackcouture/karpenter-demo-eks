@@ -1,14 +1,14 @@
 resource "aws_eks_cluster" "eks" {
 
-  count    = var.is-eks-cluster-enabled == true ? 1 : 0
+  count    = var.is_eks_cluster_enabled == true ? 1 : 0
   name     = var.cluster_name
-  role_arn = var.eks-cluster-role-arn # aws_iam_role.eks-cluster-role[count.index].arn
+  role_arn = var.eks_cluster_role_arn # aws_iam_role.eks_cluster_role[count.index].arn
   version  = var.kubernetes_version
 
   vpc_config {
     subnet_ids              = var.private_subnet_ids
-    endpoint_private_access = var.endpoint-private-access
-    endpoint_public_access  = var.endpoint-public-access
+    endpoint_private_access = var.endpoint_private_access
+    endpoint_public_access  = var.endpoint_public_access
     security_group_ids      = [var.aws_eks_security_group_id] #[aws_security_group.eks_cluster_sg.id]
   }
 
@@ -35,7 +35,7 @@ data "tls_certificate" "eks-certificate" {
   url = aws_eks_cluster.eks[0].identity[0].oidc[0].issuer
 }
 
-resource "aws_iam_openid_connect_provider" "eks-oidc" {
+resource "aws_iam_openid_connect_provider" "eks_oidc" {
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = [data.tls_certificate.eks-certificate.certificates[0].sha1_fingerprint]
   url             = data.tls_certificate.eks-certificate.url
@@ -48,12 +48,12 @@ data "aws_iam_policy_document" "eks_oidc_assume_role_policy" {
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(aws_iam_openid_connect_provider.eks-oidc.url, "https://", "")}:sub"
+      variable = "${replace(aws_iam_openid_connect_provider.eks_oidc.url, "https://", "")}:sub"
       values   = ["system:serviceaccount:default:aws-test"]
     }
 
     principals {
-      identifiers = [aws_iam_openid_connect_provider.eks-oidc.arn]
+      identifiers = [aws_iam_openid_connect_provider.eks_oidc.arn]
       type        = "Federated"
     }
   }
@@ -66,13 +66,13 @@ resource "aws_eks_addon" "eks-addons" {
   addon_name    = each.value.name
   addon_version = each.value.version
 
-  depends_on = [aws_eks_node_group.ondemand-node]
+  depends_on = [aws_eks_node_group.ondemand_node]
 }
 
 
-resource "aws_eks_node_group" "ondemand-node" {
+resource "aws_eks_node_group" "ondemand_node" {
   cluster_name    = aws_eks_cluster.eks[0].name
-  node_group_name = "${var.cluster_name}-ondemand-node-group"
+  node_group_name = "${var.cluster_name}-ondemand_node-group"
   node_role_arn   = var.node_eks_role_arn # aws_iam_role.eks_nodegroup_role[0].arn
 
   for_each   = { for idx, subnet_id in var.private_subnet_ids : idx => subnet_id }
@@ -96,7 +96,7 @@ resource "aws_eks_node_group" "ondemand-node" {
   }
 
   tags = {
-    "Name" = "${var.cluster_name}-ondemand-nodes"
+    "Name" = "${var.cluster_name}-ondemand_nodes"
   }
 
   tags_all = {

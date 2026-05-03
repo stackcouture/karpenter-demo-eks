@@ -13,20 +13,20 @@ variable "env" {
   description = "Environment Name"
 }
 
-variable "pub-subnet-count" {}
-variable "pub-cidr-block" {
+variable "pub_subnet_count" {}
+variable "pub_cidr_block" {
   type = list(string)
 }
-variable "pub-availability-zone" {
+variable "pub_availability_zone" {
   type = list(string)
 }
-variable "pub-sub-name" {}
+variable "pub_sub_name" {}
 
-variable "pri-subnet-count" {}
-variable "pri-cidr-block" {
+variable "private_subnet_count" {}
+variable "private_cidr_block" {
   type = list(string)
 }
-variable "pri-availability-zone" {
+variable "private_availability_zone" {
   type = list(string)
 }
-variable "pri-sub-name" {}
+variable "private_sub_name" {}
