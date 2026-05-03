@@ -3,7 +3,7 @@ variable "vpc_id" {
   description = "VPC ID"
 }
 
-variable "cluster-name" {
+variable "cluster_name" {
   type        = string
   description = "Cluster name"
 }

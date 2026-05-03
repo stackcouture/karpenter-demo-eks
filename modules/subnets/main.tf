@@ -1,5 +1,5 @@
 locals {
-  cluster-name = var.cluster-name
+  cluster_name = var.cluster_name
 }
 
 resource "aws_subnet" "public-subnet" {
@@ -12,7 +12,7 @@ resource "aws_subnet" "public-subnet" {
   tags = {
     Name                                          = "${var.pub-sub-name}-${count.index + 1}"
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster-name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/role/elb"                      = "1"
   }
 
@@ -29,7 +29,7 @@ resource "aws_subnet" "private-subnet" {
   tags = {
     Name                                          = "${var.pri-sub-name}-${count.index + 1}"
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster-name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
     "kubernetes.io/role/internal-elb"             = "1"
   }
 

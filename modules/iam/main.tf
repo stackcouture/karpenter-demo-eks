@@ -1,5 +1,5 @@
 locals {
-  cluster_name = var.cluster-name
+  cluster_name = var.cluster_name
   region       = var.aws_region
   account_id   = data.aws_caller_identity.current.account_id
 }
@@ -31,6 +31,12 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
   count      = var.is_eks_role_enabled ? 1 : 0
   role       = aws_iam_role.eks-cluster-role[count.index].name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "eks-AmazonEKSVPCResourceController" {
+  count      = var.is_eks_role_enabled ? 1 : 0
+  role       = aws_iam_role.eks-cluster-role[count.index].name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
 }
 
 # Creating the EKS NodeGroup Role 

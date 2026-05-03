@@ -13,7 +13,7 @@ variable "env" {
   description = "Environment Name"
 }
 
-variable "cluster-name" {
+variable "cluster_name" {
   type        = string
   description = "Cluster Name"
 }

@@ -8,7 +8,7 @@ variable "is_eks_nodegroup_role_enabled" {
   description = "EKS NodeGroup Role enabled"
 }
 
-variable "cluster-name" {
+variable "cluster_name" {
   type        = string
   description = "Cluster Name"
 }

@@ -1,5 +1,5 @@
 locals {
-  cluster-name = var.cluster-name
+  cluster_name = var.cluster_name
 }
 
 resource "aws_internet_gateway" "igw" {
@@ -8,7 +8,7 @@ resource "aws_internet_gateway" "igw" {
   tags = {
     Name                                          = var.igw_name
     Env                                           = var.env
-    "kubernetes.io/cluster/${local.cluster-name}" = "owned"
+    "kubernetes.io/cluster/${local.cluster_name}" = "owned"
   }
   depends_on = [var.vpc_id]
 }

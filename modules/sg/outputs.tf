@@ -1,3 +1,3 @@
-output "eks-cluster-sg-id" {
-  value = aws_security_group.eks-cluster-sg.id
+output "eks_cluster_sg-id" {
+  value = aws_security_group.eks_cluster_sg.id
 }

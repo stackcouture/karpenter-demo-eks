@@ -37,7 +37,7 @@ variable "igw_name" {
   description = "Internet Gateway Name"
 }
 
-variable "cluster-name" {
+variable "cluster_name" {
   type        = string
   description = "Cluster Name"
 }
@@ -182,4 +182,10 @@ variable "max_capacity_spot" {
 variable "spot_instance_types" {
   type        = list(string)
   description = "Spot Instance Types"
+}
+
+variable "cluster_service_ipv4_cidr" {
+  description = "service ipv4 cidr for the kubernetes cluster"
+  type        = string
+  default     = null
 }

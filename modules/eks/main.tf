@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "eks" {
 
   count    = var.is-eks-cluster-enabled == true ? 1 : 0
-  name     = var.cluster-name
+  name     = var.cluster_name
   role_arn = var.eks-cluster-role-arn # aws_iam_role.eks-cluster-role[count.index].arn
   version  = var.kubernetes_version
 
@@ -9,17 +9,23 @@ resource "aws_eks_cluster" "eks" {
     subnet_ids              = var.private_subnet_ids
     endpoint_private_access = var.endpoint-private-access
     endpoint_public_access  = var.endpoint-public-access
-    security_group_ids      = [var.aws_eks_security_group_id] #[aws_security_group.eks-cluster-sg.id]
+    security_group_ids      = [var.aws_eks_security_group_id] #[aws_security_group.eks_cluster_sg.id]
   }
 
+  kubernetes_network_config {
+    service_ipv4_cidr = var.cluster_service_ipv4_cidr
+  }
 
   access_config {
     authentication_mode                         = "API"
     bootstrap_cluster_creator_admin_permissions = true
   }
 
+  # Enable EKS Cluster Control Plane Logging
+  enabled_cluster_log_types = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
   tags = {
-    Name = var.cluster-name
+    Name = var.cluster_name
     Env  = var.env
   }
 }
@@ -66,7 +72,7 @@ resource "aws_eks_addon" "eks-addons" {
 
 resource "aws_eks_node_group" "ondemand-node" {
   cluster_name    = aws_eks_cluster.eks[0].name
-  node_group_name = "${var.cluster-name}-ondemand-node-group"
+  node_group_name = "${var.cluster_name}-ondemand-node-group"
   node_role_arn   = var.node_eks_role_arn # aws_iam_role.eks_nodegroup_role[0].arn
 
   for_each   = { for idx, subnet_id in var.private_subnet_ids : idx => subnet_id }
@@ -90,11 +96,11 @@ resource "aws_eks_node_group" "ondemand-node" {
   }
 
   tags = {
-    "Name" = "${var.cluster-name}-ondemand-nodes"
+    "Name" = "${var.cluster_name}-ondemand-nodes"
   }
 
   tags_all = {
-    "kubernetes.io/cluster/${var.cluster-name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 
   depends_on = [aws_eks_cluster.eks]

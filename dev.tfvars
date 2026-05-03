@@ -9,7 +9,7 @@ enable_dns_hostnames = true
 
 #IGW 
 igw_name     = "VPC-IGW"
-cluster-name = "eks-cluster"
+cluster_name = "eks-cluster"
 
 # Subnets 
 
@@ -29,7 +29,7 @@ private-rt-name = "private-route-table"
 nat_gw_name = "NAT-GW"
 eip_name    = "VPC-Elastic-IP"
 
-sg_name        = "eks-cluster-sg"
+sg_name        = "eks_cluster_sg"
 sg_description = "Security group for EKS cluster"
 
 is_eks_role_enabled           = true
@@ -72,3 +72,5 @@ addons = [
   }
   # Add more addons as needed
 ]
+
+cluster_service_ipv4_cidr = "172.20.0.0/16"

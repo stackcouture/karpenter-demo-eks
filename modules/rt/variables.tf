@@ -25,10 +25,10 @@ variable "public_subnet_ids" {
   type        = list(string) # A list of strings (subnet IDs)
 }
 
-variable "nat_gateway_id" {
-  type        = string
-  description = "NGW ID"
-}
+# variable "nat_gateway_id" {
+#   type        = string
+#   description = "NGW ID"
+# }
 
 variable "private_subnet_ids" {
   type        = list(string)
